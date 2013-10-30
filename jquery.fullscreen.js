@@ -123,7 +123,7 @@
    * Determine if the browser supports fullscreen mode
    */
 
-  function fullScreenEnabled() {
+  function fullScreenSupported() {
     if (typeof document.cancelFullScreen != 'undefined') {
       return true;
     } else {
@@ -190,7 +190,7 @@
 
   jQuery.fn["fullScreen"] = fullScreen;
   jQuery.fn["toggleFullScreen"] = toggleFullScreen;
-  jQuery.fn["fullScreenEnabled"] = fullScreenEnabled;
+  jQuery.fn["fullScreenSupported"] = fullScreenSupported;
   installFullScreenHandlers();
 
 })();
