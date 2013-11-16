@@ -42,7 +42,7 @@
     // When state was specified then enter or exit fullscreen mode.
     if (state) {
       // Enter fullscreen
-      func = ( /** @type {?Function} */ e["requestFullScreen"]) || ( /** @type {?Function} */ e["webkitRequestFullScreen"]) || ( /** @type {?Function} */ e["mozRequestFullScreen"]);
+      func = (e["requestFullScreen"]) || (e["webkitRequestFullScreen"]) || (e["mozRequestFullScreen"]);
       if (func) {
         if (Element["ALLOW_KEYBOARD_INPUT"]) {
           func.call(e, Element["ALLOW_KEYBOARD_INPUT"]);
@@ -55,22 +55,42 @@
       return this;
     } else {
       // Exit fullscreen
-      func = ( /** @type {?Function} */ doc["cancelFullScreen"]) || ( /** @type {?Function} */ doc["webkitCancelFullScreen"]) || ( /** @type {?Function} */ doc["mozCancelFullScreen"]);
+      func = (doc["cancelFullScreen"]) || (doc["webkitCancelFullScreen"]) || (doc["mozCancelFullScreen"]);
       if (func) func.call(doc);
       return this;
     }
   }
 
   /**
-   * Browser independent document getter
+   * Browser independent fullscreen state getter
    *
-   * @param object $element
+   * @param object element
+   *
+   * @param { bool }
    */
 
-  function getDocument($element) {
+  function isFullScreen(element) {
+    var doc = getDocument(element);
+
+    // When fullscreen mode is not supported then return null
+    if (!((doc["cancelFullScreen"]) || (doc["webkitCancelFullScreen"]) || (doc["mozCancelFullScreen"]))) {
+      return null;
+    }
+    var element = (doc.fullscreenElement || doc.mozFullScreenElement || doc.webkitFullscreenElement);
+
+    return element ? element : false;
+  }
+
+  /**
+   * Browser independent document getter
+   *
+   * @param object element
+   */
+
+  function getDocument(element) {
     // We only use the first selected element because it doesn't make sense
     // to fullscreen multiple elements.
-    e = ( /** @type {Element} */ $element[0]);
+    e = ( /** @type {Element} */ element[0]);
 
     // Find the real element and the document (Depends on whether the
     // document itself or a HTML element was selected)
@@ -82,29 +102,6 @@
     }
 
     return doc;
-  }
-
-  /**
-   * Browser independent fullscreen state getter
-   *
-   * @param object $element
-   */
-
-  function isFullScreen($element) {
-    var doc = getDocument($element);
-
-    // When fullscreen mode is not supported then return null
-    if (!(( /** @type {?Function} */ doc["cancelFullScreen"]) || ( /** @type {?Function} */ doc["webkitCancelFullScreen"]) || ( /** @type {?Function} */ doc["mozCancelFullScreen"]))) {
-      return null;
-    }
-
-    // Check fullscreen state
-    state = !! doc["fullScreen"] || !! doc["webkitIsFullScreen"] || !! doc["mozFullScreen"];
-    if (!state) return state;
-
-    // Return current fullscreen element or "true" if browser doesn't
-    // support this
-    return ( /** @type {?Element} */ doc["fullScreenElement"]) || ( /** @type {?Element} */ doc["webkitCurrentFullScreenElement"]) || ( /** @type {?Element} */ doc["mozFullScreenElement"]) || state;
   }
 
   /**
