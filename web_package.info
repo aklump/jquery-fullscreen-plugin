@@ -1,4 +1,4 @@
 name = "FullScreen API"
 description = "A Loft fork of github.com/kayahr/jquery-fullscreen-plugin."
-version = 1.0.0
+version = 1.0.1
 author = Aaron Klump <sourcecode@intheloftstudios.com>
