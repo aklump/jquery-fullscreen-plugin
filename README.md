@@ -13,6 +13,13 @@ browsers (Like Chrome) and Firefox provide this new fullscreen feature.
 Usage
 -----
 
+### Checking if Fullscreen is Available
+To determine if the browser supports fullscreen mode use either of:
+
+    $(document).fullScreenSupported();
+    $("#myVideo").fullScreenSupported(true);
+
+
 ### Entering Fullscreen mode
  
 You can either switch the whole page or a single HTML element to fullscreen
